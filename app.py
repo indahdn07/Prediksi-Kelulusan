@@ -73,7 +73,7 @@ st.markdown(
     Selamat datang di aplikasi **Prediksi Kelulusan Mahasiswa** 👋
 
     Aplikasi ini menggunakan model *Machine Learning* (Logistic Regression, Random Forest, dan XGBoost)
-    untuk memprediksi apakah seorang mahasiswa berpotensi **Lulus** atau **Tidak Lulus**
+    untuk memprediksi apakah status kelulusan seorang mahasiswa adalah **Ya** atau **Tidak**
     berdasarkan data akademik seperti IPK, IPS, jumlah cuti akademik, kehadiran, dan lainnya.
 
     Gunakan menu di **sidebar kiri** untuk menjelajahi setiap bagian aplikasi:
@@ -110,16 +110,16 @@ if df is not None:
     total_data = len(df)
 
     if TARGET_COL in df.columns:
-        lulus = int((df[TARGET_COL] == 1).sum())
-        tidak_lulus = int((df[TARGET_COL] == 0).sum())
+        status_ya = int((df[TARGET_COL] == 1).sum())
+        status_tidak = int((df[TARGET_COL] == 0).sum())
     else:
-        lulus, tidak_lulus = None, None
+        status_ya, status_tidak = None, None
 
     m1, m2, m3 = st.columns(3)
     m1.metric("Total Data Mahasiswa", f"{total_data:,}")
-    if lulus is not None:
-        m2.metric("Lulus", f"{lulus:,}")
-        m3.metric("Tidak Lulus", f"{tidak_lulus:,}")
+    if status_ya is not None:
+        m2.metric("Kelulusan: Ya", f"{status_ya:,}")
+        m3.metric("Kelulusan: Tidak", f"{status_tidak:,}")
 
     with st.expander("Lihat contoh data (5 baris pertama)"):
         st.dataframe(df.head(), use_container_width=True)
@@ -134,7 +134,7 @@ else:
 # ----------------------------------------------------------------------
 with st.expander("🧩 Fitur yang digunakan model"):
     st.write(", ".join(FITUR_LIST))
-    st.caption(f"Target/label: **{TARGET_COL}** (0 = Tidak Lulus, 1 = Lulus)")
+    st.caption(f"Target/label: **{TARGET_COL}** (0 = Tidak, 1 = Ya)")
 
 # ----------------------------------------------------------------------
 # STATUS MODEL
