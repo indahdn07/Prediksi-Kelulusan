@@ -51,12 +51,12 @@ def load_dataset(path: str):
 # HEADER / BANNER
 # ----------------------------------------------------------------------
 if os.path.exists(BANNER_PATH):
-    st.image(BANNER_PATH, use_container_width=True)
+    st.image(BANNER_PATH)
 
 col_logo, col_title = st.columns([1, 5])
 with col_logo:
     if os.path.exists(LOGO_PATH):
-        st.image(LOGO_PATH, use_container_width=True)
+        st.image(LOGO_PATH)
     else:
         st.markdown("### 🎓")
 with col_title:
@@ -72,7 +72,7 @@ st.markdown(
     """
     Selamat datang di aplikasi **Prediksi Kelulusan Mahasiswa** 👋
 
-    Aplikasi ini menggunakan model *Machine Learning* (Logistic Regression, Random Forest, dan XGBoost)
+    Aplikasi ini menggunakan model *Machine Learning* (Random Forest dan XGBoost)
     untuk memprediksi apakah status kelulusan seorang mahasiswa adalah **Ya** atau **Tidak**
     berdasarkan data akademik seperti IPK, IPS, jumlah cuti akademik, kehadiran, dan lainnya.
 
@@ -128,7 +128,7 @@ if df is not None:
         if TARGET_COL in df_tampil.columns:
             df_tampil[TARGET_COL] = df_tampil[TARGET_COL].map({1: "Ya", 0: "Tidak"})
             
-        st.dataframe(df_tampil, use_container_width=True)
+        st.dataframe(df_tampil, width="stretch")
 else:
     st.info(
         "Dataset belum ditemukan di `dataset/dataset_kelulusan_mahasiswa.csv`. "
@@ -146,10 +146,11 @@ with st.expander("🧩 Fitur yang digunakan model"):
 # STATUS MODEL
 # ----------------------------------------------------------------------
 st.subheader("🤖 Status Model")
+
+# Logistic Regression sudah dihapus dari daftar agar tidak error di web
 models_info = {
-    "Logistic Regression": "logistic_regression.pkl",
     "Random Forest": "random_forest.pkl",
-    "XGBoost": "xgboost.pkl",
+    "XGBoost": "xgboost.pkl", 
 }
 model_cols = st.columns(len(models_info))
 models_dir = os.path.join(BASE_DIR, "models")
